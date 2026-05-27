@@ -118,6 +118,43 @@ index 53a9c1a..35ce27e 100644
    }
    s.swift_version  = '5.9'
    s.source         = { git: 'https://github.com/expo/expo.git' }
+diff --git a/node_modules/@expo/ui/ios/FormView.swift b/node_modules/@expo/ui/ios/FormView.swift
+index 3ef7ca5..ad1485e 100644
+--- a/node_modules/@expo/ui/ios/FormView.swift
++++ b/node_modules/@expo/ui/ios/FormView.swift
+@@ -21,6 +21,7 @@ internal struct FormView: ExpoSwiftUI.View {
+       Children()
+     }
+     .modifier(CommonViewModifiers(props: props))
++    .applyExpoUIFormStyle()
+ 
+     if #available(iOS 16.0, tvOS 16.0, *) {
+       form.scrollDisabled(!props.scrollEnabled)
+@@ -29,3 +30,24 @@ internal struct FormView: ExpoSwiftUI.View {
+     }
+   }
+ }
++
++private extension View {
++  // On macOS a bare `Form` uses the plain columns style and only takes its
++  // intrinsic size, so it renders cramped in the top-leading corner of the host.
++  // Use the grouped (inset) style and fill the host to match the modern macOS look.
++  // iOS/tvOS are left untouched.
++  @ViewBuilder
++  func applyExpoUIFormStyle() -> some View {
++#if os(macOS)
++    if #available(macOS 13.0, *) {
++      self
++        .formStyle(.grouped)
++        .frame(maxWidth: .infinity, maxHeight: .infinity)
++    } else {
++      self
++    }
++#else
++    self
++#endif
++  }
++}
 diff --git a/node_modules/@expo/ui/ios/HostView.swift b/node_modules/@expo/ui/ios/HostView.swift
 index aea5549..8dd3907 100644
 --- a/node_modules/@expo/ui/ios/HostView.swift
