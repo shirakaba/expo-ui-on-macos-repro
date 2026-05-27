@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "macos": "rnc-cli run-macos",
     "windows": "rnc-cli run-windows",
-    "autolink-windows": "react-native autolink-windows"
+    "autolink-windows": "react-native autolink-windows",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/ui": "0.2.0-beta.9",
@@ -28,7 +29,8 @@
     "typescript": "~5.9.2",
     "@react-native-community/cli": "latest",
     "@rnx-kit/metro-config": "latest",
-    "@react-native/metro-config": "~0.81"
+    "@react-native/metro-config": "~0.81",
+    "patch-package": "^8.0.1"
   },
   "private": true,
   "overrides": {
