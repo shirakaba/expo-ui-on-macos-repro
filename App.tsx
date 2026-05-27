@@ -1,30 +1,39 @@
-import { Button, Host } from '@expo/ui/swift-ui';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, Host, VStack, Text } from "@expo/ui/swift-ui";
+import { fixedSize } from "@expo/ui/swift-ui/modifiers";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <SaveButton />
+    <>
       <StatusBar style="auto" />
-    </View>
+      <Host style={{ flex: 1 }}>
+        <VStack spacing={8}>
+          <Text>Expo UI components on macOS</Text>
+          <SaveButton />
+        </VStack>
+      </Host>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
 function SaveButton() {
   return (
-    <Host style={{ flex: 1 }}>
-      <Button variant="default">Save changes</Button>
-    </Host>
+    <Button
+      variant="glassProminent"
+      onPress={() => alert("Hello from Expo UI!")}
+      modifiers={[fixedSize()]}
+    >
+      Save changes
+    </Button>
   );
 }
